@@ -1,4 +1,4 @@
-package com.wind.coi;
+package com.wind.coi.study;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Coi extends ApplicationAdapter {
+public class TextureRegionStudy extends ApplicationAdapter {
 
     SpriteBatch batch;
 

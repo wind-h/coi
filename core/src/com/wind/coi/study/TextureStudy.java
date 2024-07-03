@@ -1,31 +1,31 @@
-package com.wind.coi;
+package com.wind.coi.study;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Coi extends ApplicationAdapter {
+public class TextureStudy extends ApplicationAdapter {
 
     SpriteBatch batch;
 
     Texture img;
 
-    TextureRegion imgRegion;
-
     @Override
     public void create() {
         batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
-        imgRegion = new TextureRegion(img, 0, 0, 128, 128);
+        int height = img.getHeight();
+        int width = img.getWidth();
+        Gdx.app.log("create", "height:" + height + " width:" + width);
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.begin();
-        batch.draw(imgRegion, 0, 0);
+        batch.draw(img, 0, 0);
         batch.end();
     }
 
