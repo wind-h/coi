@@ -1,6 +1,9 @@
-package com.wind.coi;
+package com.wind.coi.study;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,9 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.wind.coi.study.GroupStudy;
 
-public class Coi extends Game {
+public class ScreenStudy extends Game {
 
     public static final float WORLD_WIDTH = 480;
     public static final float WORLD_HEIGHT = 800;
@@ -97,7 +99,7 @@ public class Coi extends Game {
 
     public static class StartScreen implements Screen {
 
-        private Coi mainGame;
+        private ScreenStudy mainGame;
 
         private Texture logo;
 
@@ -107,7 +109,7 @@ public class Coi extends Game {
 
         private float deltaSum;
 
-        public StartScreen(Coi mainGame) {
+        public StartScreen(ScreenStudy mainGame) {
             this.mainGame = mainGame;
             stage = new Stage();
             logo = new Texture("img.png");
