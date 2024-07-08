@@ -52,6 +52,20 @@ public class GameStage extends AbstractBaseStage {
 
     }
 
+    /**
+     * 增加当前分数
+     */
+    public void addCurrScore(int scoreStep) {
+        // 增加分数
+        topGroup.getCurrentScoreGroup().addScore(scoreStep);
+        // 如果当前分数大于最佳分数, 则更新最佳分数
+        int currSore = topGroup.getCurrentScoreGroup().getScore();
+        int bestSore = topGroup.getBestScoreGroup().getScore();
+        if (currSore > bestSore) {
+            topGroup.getBestScoreGroup().setScore(currSore);
+        }
+    }
+
     @Override
     public void dispose() {
         super.dispose();

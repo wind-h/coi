@@ -26,6 +26,9 @@ public class GameScreen extends ScreenAdapter {
     public void init() {
         // 创建游戏舞台
         gameStage = new GameStage(mainGame, new StretchViewport(mainGame.getWorldWidth(), mainGame.getWorldHeight()));
+
+        // 把输入处理设置到主游戏舞台（必须设置, 否则无法接收用户输入）
+        Gdx.input.setInputProcessor(gameStage);
     }
 
     @Override
@@ -44,5 +47,13 @@ public class GameScreen extends ScreenAdapter {
         if (gameStage != null) {
             gameStage.dispose();
         }
+    }
+
+    public GameStage getGameStage() {
+        return gameStage;
+    }
+
+    public void setGameStage(GameStage gameStage) {
+        this.gameStage = gameStage;
     }
 }

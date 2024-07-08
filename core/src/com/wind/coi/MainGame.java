@@ -103,4 +103,12 @@ public class MainGame extends Game {
     public void setWorldHeight(float worldHeight) {
         this.worldHeight = worldHeight;
     }
+
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
+
+    public void setGameScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+    }
 }

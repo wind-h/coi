@@ -1,9 +1,15 @@
 package com.wind.coi.actor;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.wind.coi.MainGame;
 import com.wind.coi.constant.ResourceConstant;
+import com.wind.coi.data.DataModel;
+import com.wind.coi.data.DataModelImpl;
 
 /**
  * 中间部分演员组, 2048 数字卡片展示区域, 滑动事件捕获区域
@@ -21,6 +27,12 @@ public class MiddleGroup extends AbstractBaseGroup {
 
     private CardGroup[][] allCards = new CardGroup[CARD_ROW_SUM][CARD_COL_SUM];
 
+    private DataModel dataModel;
+
+    /**
+     * 滑动生效的最小距离
+     */
+    private static final float SLIDE_MIN_DIFF = 20;
 
     public MiddleGroup(MainGame mainGame) {
         super(mainGame);
@@ -61,5 +73,118 @@ public class MiddleGroup extends AbstractBaseGroup {
             }
         }
 
+        addListener(new InputListenerImpl());
+
+        dataModel = new DataModelImpl(CARD_ROW_SUM, CARD_COL_SUM, new DateListenerImpl());
+        dataModel.dataInit();
+
+        // 数据模型初始化后同步到演员数组
+        syncDataToCardGroups();
+    }
+
+    /**
+     * 同步 数据模型中的数据 到 卡片演员数组
+     */
+    private void syncDataToCardGroups() {
+        int[][] data = dataModel.getData();
+        for (int row = 0; row < CARD_ROW_SUM; row++) {
+            for (int col = 0; col < CARD_COL_SUM; col++) {
+                allCards[row][col].setNum(data[row][col]);
+            }
+        }
+    }
+
+    public void toUp() {
+        // 操作数据模型中的数据
+        dataModel.toUp();
+        // 操作完数据模型中的数据后, 需要同步到卡片演员数组
+        syncDataToCardGroups();
+        // todo 播放移动操作的音效
+    }
+
+    public void toDOwn() {
+        // 操作数据模型中的数据
+        dataModel.toDown();
+        // 操作完数据模型中的数据后, 需要同步到卡片演员数组
+        syncDataToCardGroups();
+        // todo 播放移动操作的音效
+    }
+
+    public void toLeft() {
+        // 操作数据模型中的数据
+        dataModel.toLeft();
+        // 操作完数据模型中的数据后, 需要同步到卡片演员数组
+        syncDataToCardGroups();
+        // todo 播放移动操作的音效
+    }
+
+    public void toRight() {
+        // 操作数据模型中的数据
+        dataModel.toRight();
+        // 操作完数据模型中的数据后, 需要同步到卡片演员数组
+        syncDataToCardGroups();
+        // todo 播放移动操作的音效
+    }
+
+    public class InputListenerImpl extends InputListener {
+
+        private float downX;
+
+        private float downY;
+
+        /**
+         * 触摸按下
+         */
+        @Override
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            downX = x;
+            downY = y;
+            return true;
+        }
+
+        /**
+         * 触摸松开
+         */
+        @Override
+        public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            float diffX = x - downX;
+            float diffY = y - downY;
+
+            if (Math.abs(diffX) >= SLIDE_MIN_DIFF && Math.abs(diffX) * 0.5F > Math.abs(diffY)) {
+                // 左右滑动
+                if (diffX > 0) {
+                    toRight();
+                } else {
+                    toLeft();
+                }
+            } else if (Math.abs(diffY) >= SLIDE_MIN_DIFF && Math.abs(diffY) * 0.5F > Math.abs(diffX)) {
+                // 上下滑动
+                if (diffY > 0) {
+                    toUp();
+                } else {
+                    toDOwn();
+                }
+            }
+        }
+    }
+
+
+
+    public class DateListenerImpl implements DataModel.DataListener {
+
+        @Override
+        public void onNumberMerge(int rowAfterMerge, int colAfterMerge, int numAfterMerge, int currentScoreAfterMerger) {
+            // 有卡片合成, 在合成位置附加动画效果, 缩放值从 0.8 到 1.2, 再到 1.0
+            allCards[rowAfterMerge][colAfterMerge].setScale(0.8F);
+            SequenceAction sequence = Actions.sequence(
+                    Actions.scaleTo(1.2F, 1.2F, 0.1F),
+                    Actions.scaleTo(1.0F, 1.0F, 0.1F)
+            );
+            allCards[rowAfterMerge][colAfterMerge].addAction(sequence);
+            // todo 播放数字合成的音效
+            // mergeSound.play();
+            // 增加当前分数
+            getMainGame().getGameScreen().getGameStage().addCurrScore(numAfterMerge);
+        }
     }
 }
