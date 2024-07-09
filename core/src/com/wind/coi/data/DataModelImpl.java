@@ -95,6 +95,11 @@ public class DataModelImpl implements DataModel  {
     }
 
     @Override
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    @Override
     public void toUp() {
         if (gameStatus != GameStatus.GAMING) {
             return;
@@ -149,6 +154,7 @@ public class DataModelImpl implements DataModel  {
                         data[row][col] = data[tempRow][col];
                         data[tempRow][col] = 0;
                         hasMove = true;
+                        row--;
                         // data[row][tempCol]和data[row][col]相等，则data[row][col]变为2*data[row][col]
                     } else if (data[row][col] == data[tempRow][col]) {
                         currentScore += data[tempRow][col];

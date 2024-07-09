@@ -6,6 +6,11 @@ public interface DataModel {
 
     int[][] getData();
 
+    /**
+     * 获取当前的分数
+     */
+    int getCurrentScore();
+
     // 向上，向下，向左，向右
 
     void toUp();
@@ -50,5 +55,7 @@ public interface DataModel {
          * @param currentScoreAfterMerger 合并后的当前分数
          */
         void onNumberMerge(int rowAfterMerge, int colAfterMerge, int numAfterMerge, int currentScoreAfterMerger);
+
+        void onGameOver(boolean isWin);
     }
 }

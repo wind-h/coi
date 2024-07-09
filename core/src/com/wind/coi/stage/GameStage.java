@@ -65,6 +65,16 @@ public class GameStage extends AbstractBaseStage {
     }
 
     /**
+     * 重新开始游戏
+     */
+    public void restartGame() {
+        middleGroup.restartGame();
+        // 当前分数清零
+        topGroup.getCurrentScoreGroup().setScore(0);
+    }
+
+
+    /**
      * 增加当前分数
      */
     public void addCurrScore(int scoreStep) {
@@ -81,6 +91,10 @@ public class GameStage extends AbstractBaseStage {
     @Override
     public void dispose() {
         super.dispose();
+        // 舞台销毁时保存最佳分数
+        Preferences prefs = Gdx.app.getPreferences(ResourceConstant.Prefs.FILE_NAME);
+        prefs.putInteger(ResourceConstant.Prefs.KEY_BEST_SCORE, topGroup.getBestScoreGroup().getScore());
+        prefs.flush();
     }
 
     /**
@@ -120,7 +134,7 @@ public class GameStage extends AbstractBaseStage {
         public boolean keyUp(InputEvent event, int keycode) {
             if (keycode == Input.Keys.BACK) {
                 // 在主游戏舞台界面按下返回键并弹起后, 提示是否退出游戏（显示退出确认舞台）
-                // getMainGame().getGameScreen().setShowExitConfirmStage(true);
+                getMainGame().getGameScreen().setShowExitConfirmStage(true);
                 return true;
             }
             return super.keyUp(event, keycode);

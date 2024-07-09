@@ -103,6 +103,14 @@ public class MiddleGroup extends AbstractBaseGroup {
         }
     }
 
+    /**
+     * 重新开始游戏
+     */
+    public void restartGame() {
+        dataModel.dataInit();
+        syncDataToCardGroups();
+    }
+
     public void toUp() {
         // 操作数据模型中的数据
         dataModel.toUp();
@@ -206,6 +214,12 @@ public class MiddleGroup extends AbstractBaseGroup {
             mergeSound.play();
             // 增加当前分数
             getMainGame().getGameScreen().getGameStage().addCurrScore(numAfterMerge);
+        }
+
+        @Override
+        public void onGameOver(boolean isWin) {
+            // 游戏结束, 展示结束舞台
+            getMainGame().getGameScreen().showGameOverStage(isWin, dataModel.getCurrentScore());
         }
     }
 }

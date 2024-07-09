@@ -13,6 +13,9 @@ public class ResourceConstant {
      */
     public static final float FIX_WORLD_WIDTH = 480.0F;
 
+    /** 对话框的宽度 */
+    public static final float DIALOG_WIDTH = 370;
+
     /**
      * 纹理途径
      */
@@ -30,6 +33,7 @@ public class ResourceConstant {
 
 
     public interface AtlasNames {
+        String GAME_HELP_BG = "game_help_bg";
         String GAME_BLANK = "game_blank";
         String GAME_LOGO = "game_logo";
         String GAME_RECT_BG = "game_rect_bg";
@@ -38,6 +42,10 @@ public class ResourceConstant {
         String GAME_SCORE_BG_NOW = "game_score_bg_now";
         String GAME_BTN_EXIT = "game_btn_exit";
         String GAME_BTN_HELP = "game_btn_help";
+        String DIALOG_BTN_OK = "dialog_btn_ok";
+        String DIALOG_BTN_cancel = "dialog_btn_cancel";
+        String BTN_BACK = "btn_back";
+        String BTN_AGAIN = "btn_again";
     }
 
     /**
