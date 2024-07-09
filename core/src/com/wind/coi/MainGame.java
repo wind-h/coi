@@ -35,7 +35,7 @@ public class MainGame extends Game {
     @Override
     public void create() {
         // 设置日志输出级别
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        Gdx.app.setLogLevel(Application.LOG_ERROR);
 
         // 固定宽度
         worldWidth = ResourceConstant.FIX_WORLD_WIDTH;

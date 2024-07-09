@@ -36,8 +36,11 @@ public class GameScreen extends ScreenAdapter {
         // 创建游戏舞台
         gameStage = new GameStage(mainGame, new StretchViewport(mainGame.getWorldWidth(), mainGame.getWorldHeight()));
         helpStage = new HelpStage(mainGame, new StretchViewport(mainGame.getWorldWidth(), mainGame.getWorldHeight()));
+        helpStage.setVisible(false);
         exitStage = new ExitStage(mainGame, new StretchViewport(mainGame.getWorldWidth(), mainGame.getWorldHeight()));
+        exitStage.setVisible(false);
         gameOverStage = new GameOverStage(mainGame, new StretchViewport(mainGame.getWorldWidth(), mainGame.getWorldHeight()));
+        gameOverStage.setVisible(false);
 
         // 把输入处理设置到主游戏舞台（必须设置, 否则无法接收用户输入）
         Gdx.input.setInputProcessor(gameStage);

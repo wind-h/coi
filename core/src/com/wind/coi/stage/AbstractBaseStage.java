@@ -16,7 +16,7 @@ public abstract class AbstractBaseStage extends Stage {
     /**
      * 舞台是否可见（是否更新和绘制）
      */
-    private Boolean visible;
+    private Boolean visible = true;
 
     public AbstractBaseStage(MainGame mainGame) {
         this.mainGame = mainGame;
