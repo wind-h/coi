@@ -1,9 +1,13 @@
 package com.wind.coi.stage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wind.coi.MainGame;
+import com.wind.coi.actor.BottomGroup;
 import com.wind.coi.actor.MiddleGroup;
 import com.wind.coi.actor.TopGroup;
 import com.wind.coi.constant.ResourceConstant;
@@ -17,6 +21,8 @@ public class GameStage extends AbstractBaseStage {
     private TopGroup topGroup;
 
     private MiddleGroup middleGroup;
+
+    private BottomGroup bottomGroup;
 
     public GameStage(MainGame mainGame) {
         super(mainGame);
@@ -44,12 +50,18 @@ public class GameStage extends AbstractBaseStage {
         topGroup.setY(middleGroupTopY + (topSurplusHeight / 2 - topGroup.getHeight() / 2));	// 顶部竖直居中
         addActor(topGroup);
 
+        bottomGroup = new BottomGroup(getMainGame());
+        bottomGroup.setX(getWidth() / 2 - bottomGroup.getWidth() / 2);				// 水平居中
+        bottomGroup.setY(middleGroup.getY() / 2 - bottomGroup.getHeight() / 2);		// 底部竖直居中
+        addActor(bottomGroup);
+
         // 当前分数清零
         topGroup.getCurrentScoreGroup().setScore(0);
         Preferences pres = Gdx.app.getPreferences(ResourceConstant.Prefs.FILE_NAME);
         int bestScore = pres.getInteger(ResourceConstant.Prefs.KEY_BEST_SCORE, 0);
         topGroup.getBestScoreGroup().setScore(bestScore);
 
+        addListener(new InputListenerImpl());
     }
 
     /**
@@ -69,5 +81,49 @@ public class GameStage extends AbstractBaseStage {
     @Override
     public void dispose() {
         super.dispose();
+    }
+
+    /**
+     * 输入事件监听器
+     */
+    private class InputListenerImpl extends InputListener {
+
+        @Override
+        public boolean keyDown(InputEvent event, int keycode) {
+            /*
+             * 对于 PC 平台, 可同时通过按键控制游戏,
+             * 监听方向键的按下, 根据方向键移动卡片
+             */
+            switch (keycode) {
+                case Input.Keys.UP: {
+                    middleGroup.toUp();
+                    return true;
+                }
+                case Input.Keys.DOWN: {
+                    middleGroup.toDown();
+                    return true;
+                }
+                case Input.Keys.LEFT: {
+                    middleGroup.toLeft();
+                    return true;
+                }
+                case Input.Keys.RIGHT: {
+                    middleGroup.toRight();
+                    return true;
+                }
+            }
+
+            return super.keyDown(event, keycode);
+        }
+
+        @Override
+        public boolean keyUp(InputEvent event, int keycode) {
+            if (keycode == Input.Keys.BACK) {
+                // 在主游戏舞台界面按下返回键并弹起后, 提示是否退出游戏（显示退出确认舞台）
+                // getMainGame().getGameScreen().setShowExitConfirmStage(true);
+                return true;
+            }
+            return super.keyUp(event, keycode);
+        }
     }
 }

@@ -30,13 +30,22 @@ public class ResourceConstant {
 
 
     public interface AtlasNames {
-
+        String GAME_BLANK = "game_blank";
         String GAME_LOGO = "game_logo";
         String GAME_RECT_BG = "game_rect_bg";
         String GAME_ROUND_RECT = "game_round_rect";
         String GAME_SCORE_BG_BEST = "game_score_bg_best";
         String GAME_SCORE_BG_NOW = "game_score_bg_now";
+        String GAME_BTN_EXIT = "game_btn_exit";
+        String GAME_BTN_HELP = "game_btn_help";
+    }
 
+    /**
+     * 音频资源
+     */
+    public interface Audios {
+        String MOVE = "audio/move.mp3";
+        String MERGE = "audio/merge.mp3";
     }
 
     /**

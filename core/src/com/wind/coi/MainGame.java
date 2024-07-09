@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.wind.coi.constant.ResourceConstant;
@@ -46,6 +47,8 @@ public class MainGame extends Game {
         assetManager = new AssetManager();
         assetManager.load(ResourceConstant.ATLAS_PATH, TextureAtlas.class);
         assetManager.load(ResourceConstant.BITMAP_FONT_PATH, BitmapFont.class);
+        assetManager.load(ResourceConstant.Audios.MERGE, Sound.class);
+        assetManager.load(ResourceConstant.Audios.MOVE, Sound.class);
 
         // 等待资源加载完成
         assetManager.finishLoading();
@@ -110,5 +113,13 @@ public class MainGame extends Game {
 
     public void setGameScreen(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
+    }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
+    public void setAssetManager(AssetManager assetManager) {
+        this.assetManager = assetManager;
     }
 }

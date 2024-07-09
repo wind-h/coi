@@ -33,6 +33,15 @@ public interface DataModel {
 
     interface DataListener {
         /**
+         * 随机生成数字时调用
+         *
+         * @param row 生成的数字所在行
+         * @param col 生成的数字所在列
+         * @param num 生成的数字
+         */
+        void onGeneratorNumber(int row, int col, int num);
+
+        /**
          * 两个数字合并时调用
          *
          * @param rowAfterMerge 合并后数字所在行
@@ -40,6 +49,6 @@ public interface DataModel {
          * @param numAfterMerge 合并后的数字
          * @param currentScoreAfterMerger 合并后的当前分数
          */
-        public void onNumberMerge(int rowAfterMerge, int colAfterMerge, int numAfterMerge, int currentScoreAfterMerger);
+        void onNumberMerge(int rowAfterMerge, int colAfterMerge, int numAfterMerge, int currentScoreAfterMerger);
     }
 }

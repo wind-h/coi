@@ -1,8 +1,10 @@
 package com.wind.coi.actor;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
@@ -33,6 +35,10 @@ public class MiddleGroup extends AbstractBaseGroup {
      * 滑动生效的最小距离
      */
     private static final float SLIDE_MIN_DIFF = 20;
+
+    private Sound mergeSound;
+
+    private Sound moveSound;
 
     public MiddleGroup(MainGame mainGame) {
         super(mainGame);
@@ -73,6 +79,9 @@ public class MiddleGroup extends AbstractBaseGroup {
             }
         }
 
+        mergeSound = getMainGame().getAssetManager().get(ResourceConstant.Audios.MERGE);
+        moveSound = getMainGame().getAssetManager().get(ResourceConstant.Audios.MOVE);
+
         addListener(new InputListenerImpl());
 
         dataModel = new DataModelImpl(CARD_ROW_SUM, CARD_COL_SUM, new DateListenerImpl());
@@ -99,15 +108,17 @@ public class MiddleGroup extends AbstractBaseGroup {
         dataModel.toUp();
         // 操作完数据模型中的数据后, 需要同步到卡片演员数组
         syncDataToCardGroups();
-        // todo 播放移动操作的音效
+        // 播放移动操作的音效
+        moveSound.play();
     }
 
-    public void toDOwn() {
+    public void toDown() {
         // 操作数据模型中的数据
         dataModel.toDown();
         // 操作完数据模型中的数据后, 需要同步到卡片演员数组
         syncDataToCardGroups();
-        // todo 播放移动操作的音效
+        // 播放移动操作的音效
+        moveSound.play();
     }
 
     public void toLeft() {
@@ -115,7 +126,8 @@ public class MiddleGroup extends AbstractBaseGroup {
         dataModel.toLeft();
         // 操作完数据模型中的数据后, 需要同步到卡片演员数组
         syncDataToCardGroups();
-        // todo 播放移动操作的音效
+        // 播放移动操作的音效
+        moveSound.play();
     }
 
     public void toRight() {
@@ -123,7 +135,8 @@ public class MiddleGroup extends AbstractBaseGroup {
         dataModel.toRight();
         // 操作完数据模型中的数据后, 需要同步到卡片演员数组
         syncDataToCardGroups();
-        // todo 播放移动操作的音效
+        // 播放移动操作的音效
+        moveSound.play();
     }
 
     public class InputListenerImpl extends InputListener {
@@ -162,7 +175,7 @@ public class MiddleGroup extends AbstractBaseGroup {
                 if (diffY > 0) {
                     toUp();
                 } else {
-                    toDOwn();
+                    toDown();
                 }
             }
         }
@@ -173,6 +186,14 @@ public class MiddleGroup extends AbstractBaseGroup {
     public class DateListenerImpl implements DataModel.DataListener {
 
         @Override
+        public void onGeneratorNumber(int row, int col, int num) {
+            // 有数字生成新, 该数字所在位置的卡片附加一个动画效果, 0.2 秒内缩放值从 0.2 到 1.0
+            allCards[row][col].setScale(0.2F);
+            ScaleToAction scaleTo = Actions.scaleTo(1.0F, 1.0F, 0.2F);
+            allCards[row][col].addAction(scaleTo);
+        }
+
+        @Override
         public void onNumberMerge(int rowAfterMerge, int colAfterMerge, int numAfterMerge, int currentScoreAfterMerger) {
             // 有卡片合成, 在合成位置附加动画效果, 缩放值从 0.8 到 1.2, 再到 1.0
             allCards[rowAfterMerge][colAfterMerge].setScale(0.8F);
@@ -181,8 +202,8 @@ public class MiddleGroup extends AbstractBaseGroup {
                     Actions.scaleTo(1.0F, 1.0F, 0.1F)
             );
             allCards[rowAfterMerge][colAfterMerge].addAction(sequence);
-            // todo 播放数字合成的音效
-            // mergeSound.play();
+            // 播放数字合成的音效
+            mergeSound.play();
             // 增加当前分数
             getMainGame().getGameScreen().getGameStage().addCurrScore(numAfterMerge);
         }
