@@ -13,6 +13,11 @@ import com.wind.coi.constant.ResourceConstant;
  */
 public class BottomGroup extends AbstractBaseGroup {
 
+    // 帮助按钮X坐标
+    private static final float HELP_BUTTON_X = 15;
+    // 退出按钮X坐标
+    private static final float EXIT_BUTTON_X = 240;
+
     private Button helpButton;
 
     private Button exitButton;
@@ -23,11 +28,17 @@ public class BottomGroup extends AbstractBaseGroup {
     }
 
     public void init() {
-        Button.ButtonStyle helpStyle = new Button.ButtonStyle();
-        helpStyle.up = new TextureRegionDrawable(getMainGame().getAtlas().findRegion(ResourceConstant.AtlasNames.GAME_BTN_HELP, 1));
-        helpStyle.down = new TextureRegionDrawable(getMainGame().getAtlas().findRegion(ResourceConstant.AtlasNames.GAME_BTN_HELP, 2));
+        createHelpButtonWithListener();
+
+        createExitButtonWithListener();
+
+        setSize(getMainGame().getWorldWidth(), helpButton.getHeight());
+    }
+
+    public void createHelpButtonWithListener() {
+        Button.ButtonStyle helpStyle = toButtonStyle(ResourceConstant.AtlasNames.GAME_BTN_HELP);
         helpButton = new Button(helpStyle);
-        helpButton.setX(15);
+        helpButton.setX(HELP_BUTTON_X);
         // 设置按钮点击监听
         helpButton.addListener(new ClickListener() {
             @Override
@@ -37,14 +48,12 @@ public class BottomGroup extends AbstractBaseGroup {
             }
         });
         addActor(helpButton);
+    }
 
-        setSize(getMainGame().getWorldWidth(), helpButton.getHeight());
-
-        Button.ButtonStyle exitStyle = new Button.ButtonStyle();
-        exitStyle.up = new TextureRegionDrawable(getMainGame().getAtlas().findRegion(ResourceConstant.AtlasNames.GAME_BTN_EXIT, 1));
-        exitStyle.down = new TextureRegionDrawable(getMainGame().getAtlas().findRegion(ResourceConstant.AtlasNames.GAME_BTN_EXIT, 2));
+    public void createExitButtonWithListener() {
+        Button.ButtonStyle exitStyle = toButtonStyle(ResourceConstant.AtlasNames.GAME_BTN_EXIT);
         exitButton = new Button(exitStyle);
-        exitButton.setX(240);
+        exitButton.setX(EXIT_BUTTON_X);
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -52,5 +61,12 @@ public class BottomGroup extends AbstractBaseGroup {
             }
         });
         addActor(exitButton);
+    }
+
+    private Button.ButtonStyle toButtonStyle(String gameName) {
+        Button.ButtonStyle style = new Button.ButtonStyle();
+        style.up = new TextureRegionDrawable(getMainGame().getAtlas().findRegion(gameName, 1));
+        style.down = new TextureRegionDrawable(getMainGame().getAtlas().findRegion(gameName, 2));
+        return style;
     }
 }
