@@ -27,6 +27,7 @@ public class BottomGroup extends AbstractBaseGroup {
         init();
     }
 
+    @Override
     public void init() {
         createHelpButtonWithListener();
 

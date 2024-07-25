@@ -32,13 +32,11 @@ public class CardGroup extends AbstractBaseGroup {
         init();
     }
 
+    @Override
     public void init() {
         // 设置卡片的背景
         bgImage = new Image(getMainGame().getAtlas().findRegion(ResourceConstant.AtlasNames.GAME_ROUND_RECT));
         addActor(bgImage);
-
-        // 设置卡片的大小
-        setSize(bgImage.getWidth(), bgImage.getHeight());
 
         // 设置字体和字体颜色
         Label.LabelStyle style = new Label.LabelStyle();
@@ -53,6 +51,9 @@ public class CardGroup extends AbstractBaseGroup {
         numLabel.setX(getWidth() / 2 - numLabel.getWidth() / 2);
         numLabel.setY(getHeight() / 2 - numLabel.getHeight() / 2);
         addActor(numLabel);
+
+        // 设置卡片的大小
+        setSize(bgImage.getWidth(), bgImage.getHeight());
 
         setNum(num);
     }
@@ -72,6 +73,10 @@ public class CardGroup extends AbstractBaseGroup {
         numLabel.setY(getHeight() / 2 - numLabel.getHeight() / 2);
 
         // 根据不同的数字给卡片背景设置颜色
+        setNumColor();
+    }
+
+    private void setNumColor() {
         switch (this.num) {
             case 2: {
                 bgImage.setColor(ResourceConstant.CardColors.RGBA_2);

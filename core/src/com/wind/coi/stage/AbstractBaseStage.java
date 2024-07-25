@@ -42,4 +42,8 @@ public abstract class AbstractBaseStage extends Stage {
     public void setVisible(Boolean visible) {
         this.visible = visible;
     }
+
+    public void init() {
+
+    }
 }

@@ -36,13 +36,17 @@ public class DialogGroup extends AbstractBaseGroup {
     /** 取消按钮 */
     private Button cancelButton;
 
+    private String message;
+
     public DialogGroup(MainGame mainGame, String message) {
         super(mainGame);
-        setWidth(ResourceConstant.DIALOG_WIDTH);
-        init(message);
+        this.message = message;
+        init();
     }
 
-    public void init(String message) {
+    @Override
+    public void init() {
+        setWidth(ResourceConstant.DIALOG_WIDTH);
         /*
          * 背景
          */
@@ -82,7 +86,7 @@ public class DialogGroup extends AbstractBaseGroup {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = getMainGame().getFont();
         labelStyle.fontColor = msgTextColor;
-        msgLabel = new Label(message, labelStyle);
+        msgLabel = new Label(this.message, labelStyle);
         // 设置字体大小
         msgLabel.setFontScale(0.5F);
         // 标签包裹字体

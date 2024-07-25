@@ -45,6 +45,7 @@ public class MiddleGroup extends AbstractBaseGroup {
         init();
     }
 
+    @Override
     public void init() {
         // 添加背景
         bgImage = new Image(getMainGame().getAtlas().findRegion(ResourceConstant.AtlasNames.GAME_RECT_BG));

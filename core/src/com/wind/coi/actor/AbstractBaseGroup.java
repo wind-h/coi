@@ -22,4 +22,8 @@ public abstract class AbstractBaseGroup extends Group {
     public void setMainGame(MainGame mainGame) {
         this.mainGame = mainGame;
     }
+
+    public void init() {
+
+    }
 }

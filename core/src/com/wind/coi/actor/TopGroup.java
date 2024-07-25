@@ -24,6 +24,7 @@ public class TopGroup extends AbstractBaseGroup {
         init();
     }
 
+    @Override
     public void init() {
         logoImage = new Image(getMainGame().getAtlas().findRegion(ResourceConstant.AtlasNames.GAME_LOGO));
         logoImage.setX(20);

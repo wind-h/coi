@@ -26,17 +26,20 @@ public class ScoreGroup extends AbstractBaseGroup {
      */
     private Integer score = 9999;
 
+    private TextureRegion bgRegion;
+
     public ScoreGroup(MainGame mainGame, TextureRegion bgRegion) {
         super(mainGame);
-        init(bgRegion);
+        this.bgRegion = bgRegion;
+        init();
     }
 
-    public void init(TextureRegion bgRegion) {
+    public void init() {
         // 首先设置组的宽高（以背景的宽高作为组的宽高）
-        setSize(bgRegion.getRegionWidth(), bgRegion.getRegionHeight());
+        setSize(this.bgRegion.getRegionWidth(), this.bgRegion.getRegionHeight());
 
         // 背景
-        bgImage = new Image(bgRegion);
+        bgImage = new Image(this.bgRegion);
         addActor(bgImage);
 
         Label.LabelStyle style = new Label.LabelStyle();
