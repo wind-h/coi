@@ -1,4 +1,4 @@
-package com.wind.coi.data;
+package com.wind.coi.old.data;
 
 import java.util.Random;
 

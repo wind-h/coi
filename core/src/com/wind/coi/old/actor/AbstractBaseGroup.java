@@ -1,7 +1,7 @@
-package com.wind.coi.actor;
+package com.wind.coi.old.actor;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.wind.coi.MainGame;
+import com.wind.coi.old.MainGame;
 
 /**
  * @author hsc

@@ -1,15 +1,15 @@
-package com.wind.coi.screen;
+package com.wind.coi.old.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.wind.coi.MainGame;
-import com.wind.coi.constant.ResourceConstant;
-import com.wind.coi.stage.ExitStage;
-import com.wind.coi.stage.GameOverStage;
-import com.wind.coi.stage.GameStage;
-import com.wind.coi.stage.HelpStage;
+import com.wind.coi.old.MainGame;
+import com.wind.coi.old.constant.ResourceConstant;
+import com.wind.coi.old.stage.GameOverStage;
+import com.wind.coi.old.stage.GameStage;
+import com.wind.coi.old.stage.HelpStage;
+import com.wind.coi.old.stage.ExitStage;
 
 /**
  * @author hsc

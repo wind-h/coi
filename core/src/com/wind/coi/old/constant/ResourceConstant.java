@@ -1,4 +1,4 @@
-package com.wind.coi.constant;
+package com.wind.coi.old.constant;
 
 import com.badlogic.gdx.graphics.Color;
 

@@ -1,4 +1,4 @@
-package com.wind.coi.stage;
+package com.wind.coi.old.stage;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wind.coi.MainGame;
-import com.wind.coi.constant.ResourceConstant;
+import com.wind.coi.old.MainGame;
+import com.wind.coi.old.constant.ResourceConstant;
 
 /**
  * @author hsc

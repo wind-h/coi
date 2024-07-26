@@ -1,4 +1,4 @@
-package com.wind.coi;
+package com.wind.coi.old;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.wind.coi.constant.ResourceConstant;
-import com.wind.coi.screen.GameScreen;
+import com.wind.coi.old.constant.ResourceConstant;
+import com.wind.coi.old.screen.GameScreen;
 
 public class MainGame extends Game {
 

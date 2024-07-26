@@ -1,9 +1,9 @@
-package com.wind.coi.actor;
+package com.wind.coi.old.actor;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.wind.coi.MainGame;
+import com.wind.coi.old.MainGame;
 
 /**
  * @author hsc

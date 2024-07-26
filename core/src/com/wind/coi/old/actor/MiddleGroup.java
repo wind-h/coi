@@ -1,4 +1,4 @@
-package com.wind.coi.actor;
+package com.wind.coi.old.actor;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -8,10 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
-import com.wind.coi.MainGame;
-import com.wind.coi.constant.ResourceConstant;
-import com.wind.coi.data.DataModel;
-import com.wind.coi.data.DataModelImpl;
+import com.wind.coi.old.MainGame;
+import com.wind.coi.old.constant.ResourceConstant;
+import com.wind.coi.old.data.DataModel;
+import com.wind.coi.old.data.DataModelImpl;
 
 /**
  * 中间部分演员组, 2048 数字卡片展示区域, 滑动事件捕获区域

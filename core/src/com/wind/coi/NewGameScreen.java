@@ -95,16 +95,6 @@ public class NewGameScreen extends InputAdapter implements Screen {
 
 
     @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-//        // 当鼠标移动时被调用
-//        Gdx.app.log("MouseMoved", "Mouse moved to: (" + screenX + ", " + screenY + ")");
-//        // 当鼠标移动时被调用
-//        float adjustedY = Gdx.graphics.getHeight() - screenY; // 调整Y坐标
-//        vector2.set(screenX, adjustedY); // 更新角色位置
-        return true; // 返回true表示事件已经被处理
-    }
-
-    @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.W:

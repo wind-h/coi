@@ -1,8 +1,8 @@
-package com.wind.coi.stage;
+package com.wind.coi.old.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wind.coi.MainGame;
+import com.wind.coi.old.MainGame;
 
 
 /**

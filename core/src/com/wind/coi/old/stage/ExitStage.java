@@ -1,4 +1,4 @@
-package com.wind.coi.stage;
+package com.wind.coi.old.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.wind.coi.MainGame;
-import com.wind.coi.actor.DialogGroup;
-import com.wind.coi.constant.ResourceConstant;
+import com.wind.coi.old.MainGame;
+import com.wind.coi.old.actor.DialogGroup;
+import com.wind.coi.old.constant.ResourceConstant;
 
 /**
  * @author hsc

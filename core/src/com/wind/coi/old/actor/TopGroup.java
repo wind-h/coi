@@ -1,8 +1,8 @@
-package com.wind.coi.actor;
+package com.wind.coi.old.actor;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.wind.coi.MainGame;
-import com.wind.coi.constant.ResourceConstant;
+import com.wind.coi.old.MainGame;
+import com.wind.coi.old.constant.ResourceConstant;
 
 /**
  * @author hsc
