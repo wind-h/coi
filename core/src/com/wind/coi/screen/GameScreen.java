@@ -49,7 +49,8 @@ public class GameScreen implements Screen {
         // 设置相机位置
         camera.position.set(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, 0);
         camera.update();
-
+        // 更新玩家的速度向量
+        inputHandler.updateVelocity();
         // 开始
         batch.setProjectionMatrix(camera.combined);
         // 开始
