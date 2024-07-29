@@ -16,6 +16,6 @@ public class DesktopLauncher {
 		config.setResizable(false);
 		config.setForegroundFPS(60);
 		config.setTitle("2048");
-		new Lwjgl3Application(new NewMainGame(), config);
+		new Lwjgl3Application(new MainGame(), config);
 	}
 }
