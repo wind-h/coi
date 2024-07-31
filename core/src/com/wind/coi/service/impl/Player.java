@@ -69,7 +69,7 @@ public class Player implements Updateable, Renderable {
     @Override
     public void render(SpriteBatch batch) {
         // 根据玩家位置和纹理大小渲染玩家纹理
-        batch.draw(texture, position.x -  texture.getWidth() / 2f, position.y - texture.getHeight() / 2f);
+        batch.draw(texture, position.x -  textureWidth / 2f, position.y - textureHeight / 2f);
     }
 
 
