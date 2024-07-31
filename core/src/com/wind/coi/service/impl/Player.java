@@ -3,12 +3,11 @@ package com.wind.coi.service.impl;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.MathUtils;
-import com.wind.coi.constants.GameConstants;
 import com.wind.coi.service.Renderable;
 import com.wind.coi.service.Updateable;
 
 public class Player implements Updateable, Renderable {
+
     // 玩家纹理
     private Texture texture;
     // 玩家位置
@@ -17,7 +16,9 @@ public class Player implements Updateable, Renderable {
     private Vector2 velocity;
     // 游戏相机
     private OrthoCamera camera;
-    
+    private float speed = 20f;
+    private float textureWidth;
+    private float textureHeight;
 
     /**
      * 构造函数初始化玩家对象。
@@ -29,8 +30,9 @@ public class Player implements Updateable, Renderable {
         this.camera = camera;
         position = new Vector2();
         velocity = new Vector2();
-
-
+        //缓存纹理宽度和高度，避免每次渲染时都重新计算
+        this.textureWidth = texture.getWidth();
+        this.textureHeight = texture.getHeight();
     }
 
     /**
@@ -39,8 +41,8 @@ public class Player implements Updateable, Renderable {
      * @param y 往y轴方向的移动速度
      */
     public void move(float x, float y) {
-        velocity.x += x * GameConstants.PLAYER_SPEED;
-        velocity.y += y * GameConstants.PLAYER_SPEED;
+        velocity.x += x * speed;
+        velocity.y += y * speed;
     }
 
     /**
@@ -53,10 +55,11 @@ public class Player implements Updateable, Renderable {
         // 根据速度和时间更新玩家位置
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
-
-        // 更新相机位置，使玩家保持在屏幕中央
-//        camera.setPosition(new Vector2(position.x +  texture.getWidth() / 2f - halfViewportWidth,
-//                position.y + texture.getHeight() / 2f - halfViewportHeight));
+        //更新相机位置，保持玩家在屏幕中央
+        camera.getCamera().position.x = position.x;
+        camera.getCamera().position.y = position.y;
+        //考虑平滑过渡的逻辑（示例，根据实际需求调整）
+        camera.update(delta);
     }
 
     /**
@@ -69,19 +72,36 @@ public class Player implements Updateable, Renderable {
         batch.draw(texture, position.x -  texture.getWidth() / 2f, position.y - texture.getHeight() / 2f);
     }
 
-    /**
-     * 获取玩家的位置。
-     * @return 玩家的位置向量
-     */
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
     public Vector2 getPosition() {
         return position;
     }
 
-    /**
-     * 获取玩家的速度。
-     * @return 玩家的速度向量
-     */
+    public void setPosition(Vector2 position) {
+        this.position = position;
+    }
+
     public Vector2 getVelocity() {
         return velocity;
+    }
+
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
+    }
+
+    public OrthoCamera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(OrthoCamera camera) {
+        this.camera = camera;
     }
 }

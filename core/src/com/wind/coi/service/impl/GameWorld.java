@@ -18,11 +18,11 @@ public class GameWorld implements Updateable, Renderable {
         renderables = new ArrayList<>();
     }
 
-    public void addEntity(Updateable entity) {
+    public void addUpdateable(Updateable entity) {
         updateables.add(entity);
     }
 
-    public void addEntity(Renderable entity) {
+    public void addRenderable(Renderable entity) {
         renderables.add(entity);
     }
 

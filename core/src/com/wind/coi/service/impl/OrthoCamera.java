@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  * 该类简化了摄像机的更新过程，使其能够平滑地跟踪目标位置。
  */
 public class OrthoCamera {
+
     private OrthographicCamera camera; // 正交摄像机实例
     private Vector2 targetPosition; // 摄像机的目标位置
     private float smoothing; // 平滑因子，用于控制摄像机移动的速度
@@ -41,8 +42,6 @@ public class OrthoCamera {
      * @param delta 时间间隔，用于计算摄像机的移动速度。
      */
     public void update(float delta) {
-//        camera.position.x = MathUtils.lerp(camera.position.x, targetPosition.x, smoothing * delta);
-//        camera.position.y = MathUtils.lerp(camera.position.y, targetPosition.y, smoothing * delta);
         camera.update();
     }
 

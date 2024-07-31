@@ -4,7 +4,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
 public class InputHandler extends InputAdapter {
-    private Player player;
+
+    private final Player player;
 
     public InputHandler(Player player) {
         this.player = player;

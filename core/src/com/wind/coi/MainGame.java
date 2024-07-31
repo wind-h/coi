@@ -29,6 +29,7 @@ public class MainGame extends Game {
     @Override
     public void dispose() {
         screen.dispose();
+        assetManager.dispose();
     }
 
     public AssetManager getAssetManager() {

@@ -8,25 +8,28 @@ import com.wind.coi.*;
 import com.wind.coi.service.impl.InputHandler;
 import com.wind.coi.service.impl.OrthoCamera;
 import com.wind.coi.service.impl.Player;
-import com.wind.coi.service.Renderable;
-import com.wind.coi.service.Updateable;
 import com.wind.coi.service.impl.GameWorld;
 
 public class GameScreen implements Screen {
+
     private MainGame game;
+
     private SpriteBatch batch;
+
     private GameWorld gameWorld;
+
     private OrthoCamera camera;
+
     private Player player;
 
     public GameScreen(MainGame game) {
         this.game = game;
         batch = new SpriteBatch();
         camera = new OrthoCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        player = new Player(game.getAssetManager().get("sprite/no_anim_0.png"), camera);
+        player = new Player(this.game.getAssetManager().get("sprite/no_anim_0.png"), camera);
         gameWorld = new GameWorld();
-        gameWorld.addEntity((Updateable) player);
-        gameWorld.addEntity((Renderable) player);
+        gameWorld.addUpdateable(player);
+        gameWorld.addRenderable(player);
         Gdx.input.setInputProcessor(new InputHandler(player));
     }
 
