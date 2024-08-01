@@ -5,17 +5,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.wind.coi.MainGame;
+import com.wind.coi.*;
+import com.wind.coi.character.Bullet;
+import com.wind.coi.character.Enemy;
+import com.wind.coi.character.GameWorld;
+import com.wind.coi.character.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class GameScreen implements Screen {
 
@@ -170,166 +171,6 @@ public class GameScreen implements Screen {
                 gameWorld.addRenderable(bullet);
             }
             return true;
-        }
-    }
-
-    // 在GameScreen类中添加敌人类
-    private class Enemy implements Renderable {
-        Texture texture;
-        Vector2 position;
-        Vector2 velocity;
-
-        Enemy(Texture texture) {
-            this.texture = texture;
-            this.position = new Vector2();
-            this.velocity = new Vector2();
-        }
-
-        @Override
-        public void update(float delta) {
-            // 更新敌人位置
-            position.x += velocity.x * delta;
-            position.y += velocity.y * delta;
-
-            // 边界检查，如果敌人离开屏幕，重置其位置
-            if (position.x > Gdx.graphics.getWidth() || position.x < 0 ||
-                    position.y > Gdx.graphics.getHeight() || position.y < 0) {
-                reset();
-            }
-        }
-
-        @Override
-        public void render(SpriteBatch batch) {
-            batch.draw(texture, position.x - texture.getWidth() / 2f,
-                    position.y - texture.getHeight() / 2f);
-        }
-
-        void reset() {
-            // 重新设置敌人的位置和速度
-            Random random = new Random();
-            position.set(random.nextFloat() * Gdx.graphics.getWidth(), random.nextFloat() * Gdx.graphics.getHeight());
-            velocity.set(random.nextFloat() * 100 - 50, random.nextFloat() * 100 - 50);
-        }
-    }
-
-    public interface Renderable {
-
-        void update(float delta);
-
-        void render(SpriteBatch batch);
-    }
-
-    public class GameWorld implements Renderable {
-
-        private List<Renderable> renderableList;
-
-        public GameWorld() {
-            renderableList = new ArrayList<>();
-        }
-
-        @Override
-        public void update(float delta) {
-            for (Renderable renderable : renderableList) {
-                renderable.update(delta);
-            }
-        }
-
-        @Override
-        public void render(SpriteBatch batch) {
-            for (Renderable renderable : renderableList) {
-                renderable.render(batch);
-            }
-        }
-
-        public void addRenderable(Renderable renderable) {
-            renderableList.add(renderable);
-        }
-
-        public <T extends Renderable> void addRenderableList(List<T> renderableList) {
-            this.renderableList.addAll(renderableList);
-        }
-    }
-
-    public class Player implements Renderable {
-
-        // 玩家纹理
-        private Texture playerBg;
-
-        // 玩家位置
-        private Vector2 playerPosition;
-
-        // 玩家速度
-        private Vector2 playerVelocity;
-
-        public Player(Texture playerBg) {
-            this.playerBg = playerBg;
-            playerPosition = new Vector2(playerBg.getWidth(), playerBg.getHeight());
-            playerVelocity = new Vector2();
-        }
-
-        public void move(float x, float y) {
-            playerVelocity.x += x * 20f;
-            playerVelocity.y += y * 20f;
-        }
-
-        @Override
-        public void update(float delta) {
-            // 根据速度和时间更新玩家位置
-            playerPosition.x += playerVelocity.x * delta;
-            playerPosition.y += playerVelocity.y * delta;
-        }
-
-        @Override
-        public void render(SpriteBatch batch) {
-            batch.draw(playerBg, playerPosition.x - playerBg.getWidth() / 2f, playerPosition.y - playerBg.getHeight() / 2f);
-        }
-    }
-
-    public class Bullet implements Renderable {
-
-        private Texture buBg;
-
-        private TextureRegion buBgRe;
-
-        // 玩家位置
-        private Vector2 position;
-
-        // 玩家速度
-        private Vector2 velocity;
-
-        public Bullet(Texture buBg) {
-            this.buBg = buBg;
-            this.buBgRe = new TextureRegion(buBg);
-            position = new Vector2();
-            velocity = new Vector2();
-        }
-
-        public Bullet(Texture buBg, Vector2 position, Vector2 velocity) {
-            this.position = position;
-            this.velocity = velocity;
-            this.buBg = buBg;
-            this.buBgRe = new TextureRegion(buBg);
-        }
-
-        @Override
-        public void update(float delta) {
-            // 更新子弹位置
-            position.x += velocity.x * delta;
-            position.y += velocity.y * delta;
-        }
-
-        @Override
-        public void render(SpriteBatch batch) {
-            // 缩放因子，例如0.5表示子弹大小为原来的一半
-            float scale = 0.5f;
-
-            // 获取子弹纹理的宽度和高度
-            float buWidth = buBg.getWidth() * scale;
-            float buHeight = buBg.getHeight() * scale;
-
-            // 使用缩放参数来绘制子弹
-            batch.draw(buBgRe, position.x - buWidth / 2f, position.y - buHeight / 2f,
-                    buWidth / 2f, buHeight / 2f, buWidth, buHeight, 1, 1, 0);
         }
     }
 }
