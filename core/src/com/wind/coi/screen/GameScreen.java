@@ -15,6 +15,7 @@ import com.wind.coi.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameScreen implements Screen {
 
@@ -38,6 +39,11 @@ public class GameScreen implements Screen {
 
     private SpriteBatch batch;
 
+    // 添加敌人列表
+    private List<Enemy> enemyList;
+
+    private float timer = 0f; // 初始化计时器
+    private final float ENEMY_SPAWN_TIME = 5f; // 敌人生成间隔时间，单位为秒
 
     public GameScreen(MainGame game) {
         camera = new OrthographicCamera(Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
@@ -53,6 +59,12 @@ public class GameScreen implements Screen {
         buList = new ArrayList<>();
         buVelocityList = new ArrayList<>();
         Gdx.input.setInputProcessor(new InputHandler());
+        enemyList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) { // 生成10个敌人
+            Enemy enemy = new Enemy(game.getAssetManager().get("sprite/no_anim_0.png"));
+            enemy.reset();
+            enemyList.add(enemy);
+        }
     }
 
     @Override
@@ -85,15 +97,38 @@ public class GameScreen implements Screen {
             batch.draw(buBgRe, position.x - buWidth / 2f, position.y - buHeight / 2f,
                     buWidth / 2f, buHeight / 2f, buWidth, buHeight, 1, 1, 0);
         }
+        for (Enemy enemy : enemyList) {
+            enemy.update(delta);
+            batch.draw(enemy.texture, enemy.position.x - enemy.texture.getWidth() / 2f,
+                    enemy.position.y - enemy.texture.getHeight() / 2f);
+        }
         batch.end();
         // 根据速度和时间更新玩家位置
         playerPosition.x += playerVelocity.x * delta;
         playerPosition.y += playerVelocity.y * delta;
+        spawnEnemies(delta);
     }
 
     public void move(float x, float y) {
         playerVelocity.x += x * 20f;
         playerVelocity.y += y * 20f;
+    }
+
+    // 敌人生成逻辑
+    private void spawnEnemies(float delta) {
+        // 更新计时器
+        timer += delta;
+
+        // 检查是否到了生成敌人的时刻
+        if (timer >= ENEMY_SPAWN_TIME) {
+            // 生成敌人
+            Enemy enemy = new Enemy(game.getAssetManager().get("sprite/no_anim_0.png"));
+            enemy.reset();
+            enemyList.add(enemy);
+
+            // 重置计时器
+            timer = 0f;
+        }
     }
 
     @Override
@@ -170,6 +205,38 @@ public class GameScreen implements Screen {
                 buVelocityList.add(bulletVelocity);
             }
             return true;
+        }
+    }
+
+    // 在GameScreen类中添加敌人类
+    private class Enemy {
+        Texture texture;
+        Vector2 position;
+        Vector2 velocity;
+
+        Enemy(Texture texture) {
+            this.texture = texture;
+            this.position = new Vector2();
+            this.velocity = new Vector2();
+        }
+
+        void update(float delta) {
+            // 更新敌人位置
+            position.x += velocity.x * delta;
+            position.y += velocity.y * delta;
+
+            // 边界检查，如果敌人离开屏幕，重置其位置
+            if (position.x > Gdx.graphics.getWidth() || position.x < 0 ||
+                    position.y > Gdx.graphics.getHeight() || position.y < 0) {
+                reset();
+            }
+        }
+
+        void reset() {
+            // 重新设置敌人的位置和速度
+            Random random = new Random();
+            position.set(random.nextFloat() * Gdx.graphics.getWidth(), random.nextFloat() * Gdx.graphics.getHeight());
+            velocity.set(random.nextFloat() * 100 - 50, random.nextFloat() * 100 - 50);
         }
     }
 }
