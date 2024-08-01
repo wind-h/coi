@@ -20,6 +20,7 @@ public class MainGame extends Game {
         // 资源初始化
         assetManager = new AssetManager();
         assetManager.load("sprite/no_anim_0.png", Texture.class);
+        assetManager.load("circular.png", Texture.class);
         assetManager.finishLoading();
         screen = new GameScreen(this);
         setScreen(screen);
