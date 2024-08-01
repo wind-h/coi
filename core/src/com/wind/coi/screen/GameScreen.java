@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.wind.coi.*;
+import com.wind.coi.MainGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +20,6 @@ import java.util.Random;
 public class GameScreen implements Screen {
 
     private OrthographicCamera camera;
-
-    // 玩家纹理
-    private Texture playerBg;
-    // 玩家位置
-    private Vector2 playerPosition;
-    // 玩家速度
-    private Vector2 playerVelocity;
-
-    private Texture buBg;
-
-    private TextureRegion buBgRe;
-
-    private List<Vector2> buList;
-    private List<Vector2> buVelocityList; // 存储所有子弹的速度
 
     private MainGame game;
 
@@ -45,25 +31,29 @@ public class GameScreen implements Screen {
     private float timer = 0f; // 初始化计时器
     private final float ENEMY_SPAWN_TIME = 5f; // 敌人生成间隔时间，单位为秒
 
+    private Player player;
+
+    private List<Bullet> bulletList;
+
+    private GameWorld gameWorld;
+
     public GameScreen(MainGame game) {
         camera = new OrthographicCamera(Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
         this.game = game;
         batch = new SpriteBatch();
-        playerBg = this.game.getAssetManager().get("sprite/no_anim_0.png");
-        playerPosition = new Vector2(playerBg.getWidth(), playerBg.getHeight());
-        playerVelocity = new Vector2();
-        buBg = this.game.getAssetManager().get("circular.png");
-        buBgRe = new TextureRegion(buBg);
-        buList = new ArrayList<>();
-        buVelocityList = new ArrayList<>();
-        Gdx.input.setInputProcessor(new InputHandler());
+        player = new Player(this.game.getAssetManager().get("sprite/no_anim_0.png"));
+        gameWorld = new GameWorld();
+        gameWorld.addRenderable(player);
+        bulletList = new ArrayList<>();
+        Gdx.input.setInputProcessor(new InputHandler(player));
         enemyList = new ArrayList<>();
         for (int i = 0; i < 10; i++) { // 生成10个敌人
             Enemy enemy = new Enemy(game.getAssetManager().get("sprite/no_anim_0.png"));
             enemy.reset();
             enemyList.add(enemy);
+            gameWorld.addRenderable(enemy);
         }
     }
 
@@ -78,40 +68,10 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         // 根据玩家位置和纹理大小渲染玩家纹理
-        batch.draw(playerBg, playerPosition.x -  playerBg.getWidth() / 2f, playerPosition.y - playerBg.getHeight() / 2f);
-        for (int i = 0; i < buList.size(); i++) {
-            Vector2 position = buList.get(i);
-            Vector2 velocity = buVelocityList.get(i);
-
-            // 更新子弹位置
-            position.x += velocity.x * delta;
-            position.y += velocity.y * delta;
-            // 缩放因子，例如0.5表示子弹大小为原来的一半
-            float scale = 0.5f;
-
-            // 获取子弹纹理的宽度和高度
-            float buWidth = buBg.getWidth() * scale;
-            float buHeight = buBg.getHeight() * scale;
-
-            // 使用缩放参数来绘制子弹
-            batch.draw(buBgRe, position.x - buWidth / 2f, position.y - buHeight / 2f,
-                    buWidth / 2f, buHeight / 2f, buWidth, buHeight, 1, 1, 0);
-        }
-        for (Enemy enemy : enemyList) {
-            enemy.update(delta);
-            batch.draw(enemy.texture, enemy.position.x - enemy.texture.getWidth() / 2f,
-                    enemy.position.y - enemy.texture.getHeight() / 2f);
-        }
+        gameWorld.render(batch);
         batch.end();
-        // 根据速度和时间更新玩家位置
-        playerPosition.x += playerVelocity.x * delta;
-        playerPosition.y += playerVelocity.y * delta;
         spawnEnemies(delta);
-    }
-
-    public void move(float x, float y) {
-        playerVelocity.x += x * 20f;
-        playerVelocity.y += y * 20f;
+        gameWorld.update(delta);
     }
 
     // 敌人生成逻辑
@@ -125,7 +85,7 @@ public class GameScreen implements Screen {
             Enemy enemy = new Enemy(game.getAssetManager().get("sprite/no_anim_0.png"));
             enemy.reset();
             enemyList.add(enemy);
-
+            gameWorld.addRenderable(enemy);
             // 重置计时器
             timer = 0f;
         }
@@ -155,16 +115,22 @@ public class GameScreen implements Screen {
 
     public class InputHandler extends InputAdapter {
 
+        private Player player;
+
+        public InputHandler(Player player) {
+            this.player = player;
+        }
+
         @Override
         public boolean keyDown(int keycode) {
             if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-                move(-1, 0);
+                player.move(-1, 0);
             } else if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-                move(1, 0);
+                player.move(1, 0);
             } else if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
-                move(0, 1);
+                player.move(0, 1);
             } else if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
-                move(0, -1);
+                player.move(0, -1);
             }
             return true;
         }
@@ -172,13 +138,13 @@ public class GameScreen implements Screen {
         @Override
         public boolean keyUp(int keycode) {
             if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-                move(1, 0);
+                player.move(1, 0);
             } else if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-                move(-1, 0);
+                player.move(-1, 0);
             } else if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
-                move(0, -1);
+                player.move(0, -1);
             } else if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
-                move(0, 1);
+                player.move(0, 1);
             }
             return true;
         }
@@ -194,22 +160,21 @@ public class GameScreen implements Screen {
                 camera.unproject(tempVec3.set(screenX, Gdx.graphics.getHeight() - screenY, 0f));
 
                 // 创建子弹的位置
-                Vector2 bulletPosition = new Vector2(playerPosition.x, playerPosition.y);
+                Vector2 bulletPosition = new Vector2(player.playerPosition.x, player.playerPosition.y);
                 // 计算从玩家到鼠标点击位置的向量
-                Vector2 direction = mousePos.cpy().sub(playerPosition).nor();
+                Vector2 direction = mousePos.cpy().sub(player.playerPosition).nor();
                 // 设置子弹速度，例如200单位/秒
                 Vector2 bulletVelocity = direction.scl(200);
-
-                // 添加子弹到列表中
-                buList.add(bulletPosition);
-                buVelocityList.add(bulletVelocity);
+                Bullet bullet = new Bullet(game.getAssetManager().get("circular.png"), bulletPosition, bulletVelocity);
+                bulletList.add(bullet);
+                gameWorld.addRenderable(bullet);
             }
             return true;
         }
     }
 
     // 在GameScreen类中添加敌人类
-    private class Enemy {
+    private class Enemy implements Renderable {
         Texture texture;
         Vector2 position;
         Vector2 velocity;
@@ -220,7 +185,8 @@ public class GameScreen implements Screen {
             this.velocity = new Vector2();
         }
 
-        void update(float delta) {
+        @Override
+        public void update(float delta) {
             // 更新敌人位置
             position.x += velocity.x * delta;
             position.y += velocity.y * delta;
@@ -232,11 +198,138 @@ public class GameScreen implements Screen {
             }
         }
 
+        @Override
+        public void render(SpriteBatch batch) {
+            batch.draw(texture, position.x - texture.getWidth() / 2f,
+                    position.y - texture.getHeight() / 2f);
+        }
+
         void reset() {
             // 重新设置敌人的位置和速度
             Random random = new Random();
             position.set(random.nextFloat() * Gdx.graphics.getWidth(), random.nextFloat() * Gdx.graphics.getHeight());
             velocity.set(random.nextFloat() * 100 - 50, random.nextFloat() * 100 - 50);
+        }
+    }
+
+    public interface Renderable {
+
+        void update(float delta);
+
+        void render(SpriteBatch batch);
+    }
+
+    public class GameWorld implements Renderable {
+
+        private List<Renderable> renderableList;
+
+        public GameWorld() {
+            renderableList = new ArrayList<>();
+        }
+
+        @Override
+        public void update(float delta) {
+            for (Renderable renderable : renderableList) {
+                renderable.update(delta);
+            }
+        }
+
+        @Override
+        public void render(SpriteBatch batch) {
+            for (Renderable renderable : renderableList) {
+                renderable.render(batch);
+            }
+        }
+
+        public void addRenderable(Renderable renderable) {
+            renderableList.add(renderable);
+        }
+
+        public <T extends Renderable> void addRenderableList(List<T> renderableList) {
+            this.renderableList.addAll(renderableList);
+        }
+    }
+
+    public class Player implements Renderable {
+
+        // 玩家纹理
+        private Texture playerBg;
+
+        // 玩家位置
+        private Vector2 playerPosition;
+
+        // 玩家速度
+        private Vector2 playerVelocity;
+
+        public Player(Texture playerBg) {
+            this.playerBg = playerBg;
+            playerPosition = new Vector2(playerBg.getWidth(), playerBg.getHeight());
+            playerVelocity = new Vector2();
+        }
+
+        public void move(float x, float y) {
+            playerVelocity.x += x * 20f;
+            playerVelocity.y += y * 20f;
+        }
+
+        @Override
+        public void update(float delta) {
+            // 根据速度和时间更新玩家位置
+            playerPosition.x += playerVelocity.x * delta;
+            playerPosition.y += playerVelocity.y * delta;
+        }
+
+        @Override
+        public void render(SpriteBatch batch) {
+            batch.draw(playerBg, playerPosition.x - playerBg.getWidth() / 2f, playerPosition.y - playerBg.getHeight() / 2f);
+        }
+    }
+
+    public class Bullet implements Renderable {
+
+        private Texture buBg;
+
+        private TextureRegion buBgRe;
+
+        // 玩家位置
+        private Vector2 position;
+
+        // 玩家速度
+        private Vector2 velocity;
+
+        public Bullet(Texture buBg) {
+            this.buBg = buBg;
+            this.buBgRe = new TextureRegion(buBg);
+            position = new Vector2();
+            velocity = new Vector2();
+        }
+
+        public Bullet(Texture buBg, Vector2 position, Vector2 velocity) {
+            this.position = position;
+            this.velocity = velocity;
+            this.buBg = buBg;
+            this.buBgRe = new TextureRegion(buBg);
+        }
+
+        @Override
+        public void update(float delta) {
+            // 更新子弹位置
+            position.x += velocity.x * delta;
+            position.y += velocity.y * delta;
+        }
+
+        @Override
+        public void render(SpriteBatch batch) {
+            // 缩放因子，例如0.5表示子弹大小为原来的一半
+            float scale = 0.5f;
+
+            // 获取子弹纹理的宽度和高度
+            float buWidth = buBg.getWidth() * scale;
+            float buHeight = buBg.getHeight() * scale;
+
+            // 使用缩放参数来绘制子弹
+            batch.draw(buBgRe, position.x - buWidth / 2f, position.y - buHeight / 2f,
+                    buWidth / 2f, buHeight / 2f, buWidth, buHeight, 1, 1, 0);
         }
     }
 }
