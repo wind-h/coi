@@ -3,6 +3,7 @@ package com.wind.coi.character;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.wind.coi.enums.TypeEnum;
 
 import java.util.List;
 
@@ -43,5 +44,10 @@ public class Player implements Renderable {
     @Override
     public void dispose() {
         playerBg.dispose();
+    }
+
+    @Override
+    public int getType() {
+        return TypeEnum.PLAYER.ordinal();
     }
 }

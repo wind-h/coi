@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
         gameWorld.addRenderable(player);
         Gdx.input.setInputProcessor(new InputHandler(player));
         for (int i = 0; i < 10; i++) { // 生成10个敌人
-            Enemy enemy = new Enemy(game.getAssetManager().get("sprite/no_anim_0.png"));
+            Enemy enemy = new Enemy(game.getAssetManager().get("sprite/no_anim_0.png"), gameWorld);
             enemy.reset();
             gameWorld.addRenderable(enemy);
         }

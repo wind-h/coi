@@ -1,9 +1,11 @@
 package com.wind.coi.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.wind.coi.enums.TypeEnum;
 
 public class Bullet implements Renderable {
 
@@ -12,14 +14,14 @@ public class Bullet implements Renderable {
     private TextureRegion textureRegion;
 
     // 玩家位置
-    private Vector2 position;
+    Vector2 position;
 
     // 玩家速度
     private Vector2 velocity;
 
-    private float buWidth;
+    float buWidth;
 
-    private float buHeight;
+    float buHeight;
 
     private float scale = 0.5f;
 
@@ -57,8 +59,8 @@ public class Bullet implements Renderable {
         position.x += velocity.x * delta;
         position.y += velocity.y * delta;
         // 简单示例：检测子弹是否超出边界（以屏幕尺寸为例，需要根据实际情况调整）
-        if (position.x < -buWidth / 2f || position.x > 1280 + buWidth / 2f ||
-                position.y < -buHeight / 2f || position.y > 720 + buHeight / 2f) {
+        if (position.x < -buWidth / 2f || position.x > Gdx.app.getGraphics().getWidth() + buWidth / 2f ||
+                position.y < -buHeight / 2f || position.y > Gdx.app.getGraphics().getHeight() + buHeight / 2f) {
             gameWorld.removeRenderable(this);
         }
     }
@@ -82,5 +84,10 @@ public class Bullet implements Renderable {
     @Override
     public void dispose() {
         textureRegion.getTexture().dispose();
+    }
+
+    @Override
+    public int getType() {
+        return TypeEnum.BULLET.ordinal();
     }
 }

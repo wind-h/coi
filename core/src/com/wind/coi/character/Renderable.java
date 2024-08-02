@@ -9,4 +9,6 @@ public interface Renderable {
     void render(SpriteBatch batch);
 
     void dispose();
+
+    int getType();
 }
