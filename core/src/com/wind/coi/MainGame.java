@@ -16,7 +16,7 @@ public class MainGame extends Game {
     private GameScreen screen;
 
     @Override
-    public void create () {
+    public void create() {
         // 资源初始化
         assetManager = new AssetManager();
         assetManager.load("sprite/no_anim_0.png", Texture.class);
