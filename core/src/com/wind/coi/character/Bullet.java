@@ -60,7 +60,6 @@ public class Bullet implements Renderable {
         if (position.x < -buWidth / 2f || position.x > 1280 + buWidth / 2f ||
                 position.y < -buHeight / 2f || position.y > 720 + buHeight / 2f) {
             gameWorld.removeRenderable(this);
-
         }
     }
 
