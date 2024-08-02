@@ -1,16 +1,16 @@
 package com.wind.coi.character;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameWorld implements Renderable {
 
-    private List<Renderable> renderableList;
+    private Array<Renderable> renderableList;
 
     public GameWorld() {
-        renderableList = new ArrayList<>();
+        renderableList = new Array<>();
     }
 
     @Override
@@ -38,7 +38,11 @@ public class GameWorld implements Renderable {
         renderableList.add(renderable);
     }
 
-    public <T extends Renderable> void addRenderableList(List<T> renderableList) {
+    public void removeRenderable(Renderable renderable) {
+        renderableList.removeValue(renderable, false);
+    }
+
+    public <T extends Renderable> void addRenderableList(Array<T> renderableList) {
         this.renderableList.addAll(renderableList);
     }
 }

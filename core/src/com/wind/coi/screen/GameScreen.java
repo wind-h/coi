@@ -136,7 +136,7 @@ public class GameScreen implements Screen {
                 Vector2 direction = mousePos.cpy().sub(player.playerPosition).nor();
                 // 设置子弹速度，例如200单位/秒
                 Vector2 bulletVelocity = direction.scl(200);
-                Bullet bullet = new Bullet(game.getAssetManager().get("circular.png"), bulletPosition, bulletVelocity);
+                Bullet bullet = new Bullet(game.getAssetManager().get("circular.png"), bulletPosition, bulletVelocity, gameWorld);
                 gameWorld.addRenderable(bullet);
             }
             return true;

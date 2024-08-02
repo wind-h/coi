@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.List;
 import java.util.Random;
 
 public class Enemy implements Renderable {
+
     Texture texture;
+
     Vector2 position;
+
     Vector2 velocity;
 
     public Enemy(Texture texture) {
