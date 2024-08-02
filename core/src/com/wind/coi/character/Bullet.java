@@ -1,5 +1,6 @@
 package com.wind.coi.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -50,5 +51,10 @@ public class Bullet implements Renderable {
         // 使用缩放参数来绘制子弹
         batch.draw(buBgRe, position.x - buWidth / 2f, position.y - buHeight / 2f,
                 buWidth / 2f, buHeight / 2f, buWidth, buHeight, 1, 1, 0);
+    }
+
+    @Override
+    public void dispose() {
+        buBg.dispose();
     }
 }

@@ -27,6 +27,13 @@ public class GameWorld implements Renderable {
         }
     }
 
+    @Override
+    public void dispose() {
+        for (Renderable renderable : renderableList) {
+            renderable.dispose();
+        }
+    }
+
     public void addRenderable(Renderable renderable) {
         renderableList.add(renderable);
     }

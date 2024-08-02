@@ -7,4 +7,6 @@ public interface Renderable {
     void update(float delta);
 
     void render(SpriteBatch batch);
+
+    void dispose();
 }

@@ -37,6 +37,11 @@ public class Enemy implements Renderable {
                 position.y - texture.getHeight() / 2f);
     }
 
+    @Override
+    public void dispose() {
+        texture.dispose();
+    }
+
     public void reset() {
         // 重新设置敌人的位置和速度
         Random random = new Random();

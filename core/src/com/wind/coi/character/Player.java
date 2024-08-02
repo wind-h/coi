@@ -37,4 +37,9 @@ public class Player implements Renderable {
     public void render(SpriteBatch batch) {
         batch.draw(playerBg, playerPosition.x - playerBg.getWidth() / 2f, playerPosition.y - playerBg.getHeight() / 2f);
     }
+
+    @Override
+    public void dispose() {
+        playerBg.dispose();
+    }
 }
