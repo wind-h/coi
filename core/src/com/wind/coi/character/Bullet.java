@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.wind.coi.enums.TypeEnum;
 
+/**
+ * @author hsc
+ * @date 2024/10/10 11:21
+ */
 public class Bullet implements Renderable {
 
     private Texture texture;

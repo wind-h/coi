@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.wind.coi.enums.TypeEnum;
 
-import java.util.List;
-
+/**
+ * @author hsc
+ * @date 2024/10/10 11:21
+ */
 public class Player implements Renderable {
 
     // 玩家纹理

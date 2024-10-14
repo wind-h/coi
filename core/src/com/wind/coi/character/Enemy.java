@@ -9,6 +9,10 @@ import com.wind.coi.enums.TypeEnum;
 
 import java.util.Random;
 
+/**
+ * @author hsc
+ * @date 2024/10/10 11:21
+ */
 public class Enemy implements Renderable {
 
     Texture texture;

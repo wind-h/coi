@@ -15,6 +15,10 @@ import com.wind.coi.character.Enemy;
 import com.wind.coi.character.GameWorld;
 import com.wind.coi.character.Player;
 
+/**
+ * @author hsc
+ * @date 2024/10/10 11:22
+ */
 public class GameScreen implements Screen {
 
     private OrthographicCamera camera;
@@ -37,7 +41,8 @@ public class GameScreen implements Screen {
         gameWorld = new GameWorld();
         gameWorld.addRenderable(player);
         Gdx.input.setInputProcessor(new InputHandler(player));
-        for (int i = 0; i < 10; i++) { // 生成10个敌人
+        // 生成10个敌人
+        for (int i = 0; i < 10; i++) {
             Enemy enemy = new Enemy(game.getAssetManager().get("sprite/no_anim_0.png"), gameWorld);
             enemy.reset();
             gameWorld.addRenderable(enemy);

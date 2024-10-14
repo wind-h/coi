@@ -3,6 +3,10 @@ package com.wind.coi.character;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * @author hsc
+ * @date 2024/10/10 11:21
+ */
 public class GameWorld {
 
     private Array<Renderable> renderableList;
