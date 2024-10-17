@@ -7,10 +7,8 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setWindowedMode((int) 800f, (int) 600f);
-		config.setResizable(false);
 		config.setForegroundFPS(60);
-		config.setTitle("2048");
-		new Lwjgl3Application(new MainGame2(), config);
+		config.setTitle("coi");
+		new Lwjgl3Application(new Coi(), config);
 	}
 }
