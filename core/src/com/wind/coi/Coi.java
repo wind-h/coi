@@ -162,9 +162,9 @@ public class Coi extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean scrolled(float amountX, float amountY) {
         if (amountY > 0) {
-            camera.zoom *= 0.9f; // 缩小
+            camera.zoom /= 0.9f; // 缩小
         } else if (amountY < 0) {
-            camera.zoom /= 0.9f; // 放大
+            camera.zoom *= 0.9f; // 放大
         }
         clampCamera();
         camera.update();
