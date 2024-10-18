@@ -3,7 +3,6 @@ package com.wind.coi.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -11,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wind.coi.MainGame;
@@ -21,22 +21,22 @@ import com.wind.coi.MainGame;
  */
 public class MainMenuScreen implements Screen {
 
-    private MainGame mainGame;
+    private MainGame game;
 
     private Stage stage;
 
     private OrthographicCamera camera;
 
     public MainMenuScreen(MainGame mainGame) {
-        this.mainGame = mainGame;
+        this.game = mainGame;
 
         // 初始化摄像机
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, game.getWindowH(), game.getWindowH());
         camera.update();
 
         // 初始化Stage
-        Viewport viewport = new StretchViewport(800, 480, camera);
+        Viewport viewport = new StretchViewport(game.getWindowH(), game.getWindowH(), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
@@ -45,7 +45,6 @@ public class MainMenuScreen implements Screen {
     }
 
     private void showMainMenu() {
-        Skin skin = new Skin();
         Table table = new Table();
         table.setFillParent(true);
 
@@ -57,7 +56,7 @@ public class MainMenuScreen implements Screen {
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                mainGame.setScreen(new GameScreen(mainGame));
+                game.setScreen(new GameScreen(game));
             }
         });
         // 定义标签样式
@@ -79,8 +78,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float v) {
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         stage.act(v);
         stage.draw();

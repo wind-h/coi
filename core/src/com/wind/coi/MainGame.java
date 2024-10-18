@@ -1,6 +1,7 @@
 package com.wind.coi;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.wind.coi.screen.MainMenuScreen;
@@ -13,8 +14,19 @@ public class MainGame extends Game {
 
     private AssetManager assetManager;
 
+    private Integer windowW;
+
+    private Integer windowH;
+
     @Override
     public void create() {
+        loadResources();
+        windowW = Gdx.app.getGraphics().getWidth();
+        windowH = Gdx.app.getGraphics().getHeight();
+        setScreen(new MainMenuScreen(this));
+    }
+
+    private void loadResources() {
         assetManager = new AssetManager();
         // 草地
         assetManager.load("grass.png", Texture.class);
@@ -23,7 +35,6 @@ public class MainGame extends Game {
         // 水
         assetManager.load("water.png", Texture.class);
         assetManager.finishLoading();
-        setScreen(new MainMenuScreen(this));
     }
 
     @Override
@@ -39,5 +50,13 @@ public class MainGame extends Game {
 
     public AssetManager getAssetManager() {
         return assetManager;
+    }
+
+    public Integer getWindowW() {
+        return windowW;
+    }
+
+    public Integer getWindowH() {
+        return windowH;
     }
 }

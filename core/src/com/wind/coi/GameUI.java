@@ -27,10 +27,10 @@ public class GameUI {
 
     private void initializeUI() {
         OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, game.getWindowW(), game.getWindowH());
         camera.update();
 
-        Viewport viewport = new StretchViewport(800, 480, camera);
+        Viewport viewport = new StretchViewport(game.getWindowW(), game.getWindowH(), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
