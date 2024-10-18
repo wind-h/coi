@@ -9,6 +9,6 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("coi");
-		new Lwjgl3Application(new Coi(), config);
+		new Lwjgl3Application(new MainGame(), config);
 	}
 }

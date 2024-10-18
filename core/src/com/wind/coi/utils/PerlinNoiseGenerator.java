@@ -1,9 +1,11 @@
-package com.wind.coi;
+package com.wind.coi.utils;
 
 import java.util.Random;
 
 public class PerlinNoiseGenerator {
+
     private static final int[] p = new int[512];
+
     private static final Random random = new Random();
 
     static {
@@ -53,6 +55,7 @@ public class PerlinNoiseGenerator {
         int bb = p[p[xi + 1] + yi + 1];
         double result = lerp(v, lerp(u, grad(aa, x, y), grad(ba, x - 1, y)),
                              lerp(u, grad(ab, x, y - 1), grad(bb, x - 1, y - 1)));
-        return (result + 1) / 2; // Normalize to [0, 1]
+        // Normalize to [0, 1]
+        return (result + 1) / 2;
     }
 }
