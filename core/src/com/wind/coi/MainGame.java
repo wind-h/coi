@@ -31,9 +31,9 @@ public class MainGame extends Game {
         // 草地
         assetManager.load("grass.png", Texture.class);
         // 石头
-        assetManager.load("stone.png", Texture.class);
+        assetManager.load("stone3.png", Texture.class);
         // 水
-        assetManager.load("water.png", Texture.class);
+        assetManager.load("arkycite-floor.png", Texture.class);
         assetManager.finishLoading();
     }
 

@@ -41,8 +41,8 @@ public class GameScreen implements Screen {
         // 加载纹理
         textures = new Array<>();
         textures.add(game.getAssetManager().get("grass.png")); // 草地
-        textures.add(game.getAssetManager().get("stone.png")); // 石头
-        textures.add(game.getAssetManager().get("water.png")); // 水
+        textures.add(game.getAssetManager().get("stone3.png")); // 石头
+        textures.add(game.getAssetManager().get("arkycite-floor.png")); // 水
 
         // 初始化摄像机
         camera = new OrthographicCamera();
