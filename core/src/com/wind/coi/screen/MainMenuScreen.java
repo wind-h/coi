@@ -50,9 +50,9 @@ public class MainMenuScreen implements Screen {
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.down = new BaseDrawable();
-        textButtonStyle.font = new BitmapFont();
+        textButtonStyle.font = game.font;
 
-        Button startButton = new TextButton("start game", textButtonStyle);
+        Button startButton = new TextButton("开始游戏", textButtonStyle);
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
