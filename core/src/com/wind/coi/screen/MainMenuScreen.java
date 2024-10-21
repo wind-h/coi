@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wind.coi.MainGame;
-import com.wind.coi.input.FontManager;
 
 /**
  * @author hsc
@@ -51,7 +50,7 @@ public class MainMenuScreen implements Screen {
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.down = new BaseDrawable();
-        textButtonStyle.font = FontManager.getInstance().getFont();
+        textButtonStyle.font = game.font;
 
         Button startButton = new TextButton("开始游戏", textButtonStyle);
         startButton.addListener(new ChangeListener() {
@@ -62,9 +61,9 @@ public class MainMenuScreen implements Screen {
         });
         // 定义标签样式
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = FontManager.getInstance().getFont();
+        labelStyle.font = new BitmapFont();
         labelStyle.fontColor = Color.WHITE;
-        Label titleLabel = new Label("Coi 游戏", labelStyle);
+        Label titleLabel = new Label("Coi game", labelStyle);
         titleLabel.setFontScale(2.0f);
 
         table.add(titleLabel).expandX().fillX().padBottom(20).row();
