@@ -16,6 +16,17 @@ buildscript {
 
 allprojects {
     apply plugin: "eclipse"
+    apply plugin: "idea"
+
+    idea {
+        module {
+            // Javadoc
+            downloadJavadoc = true
+
+            // sources
+            downloadSources = true
+        }
+    }
 
     version = '1.0'
     ext {
