@@ -1,68 +1,59 @@
 package com.wind.coi;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.wind.coi.core.Core;
 
-public class Coi extends ApplicationAdapter {
+public class Coi implements ApplicationListener {
 
-	private OrthographicCamera camera;
-	SpriteBatch batch;
-	Texture img;
-	Sprite sprite;
+	public final static String TAG = Coi.class.getName();
+
+	private WorldController worldController;
+
+	private WorldRenderer worldRenderer;
+
+	private boolean paused;
 	
 	@Override
 	public void create () {
-		Core.app.log("", "创建");
-
-		float width = Core.graphics.getWidth();
-		float height = Core.graphics.getHeight();
-
-		//camera = new OrthographicCamera(width, height);
-		batch = new SpriteBatch();
-
-		img = new Texture("badlogic.jpg");
-		//img.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		//TextureRegion region = new TextureRegion(img, 0, 0, 512, 275);
-
-		//sprite = new Sprite(img);
-		//sprite.setSize(0.9f, 0.9f * (sprite.getHeight() / sprite.getWidth()));
-		//sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		//sprite.setPosition(-sprite.getWidth() / 2, -sprite.getHeight() / 2);
+		Core.app.log(TAG, "创建");
+		Core.app.setLogLevel(Application.LOG_DEBUG);
+		worldController = new WorldController();
+		worldRenderer = new WorldRenderer(worldController);
+		paused = false;
 	}
 
 	@Override
 	public void resize (int width, int height) {
-		Core.app.log("", "重设大小width:" + width + " height:" + height);
+		Core.app.log(TAG, "重设大小width:" + width + " height:" + height);
+		worldRenderer.resize(width, height);
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(0, 0, 0, 1);
-		//batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		if (!paused) {
+			worldController.update(Core.app.getGraphics().getDeltaTime());
+		}
+		ScreenUtils.clear(0x64 / 255.0f, 0x95 / 255.0f, 0xed / 255.0f, 0xff / 255.0f);
+		worldRenderer.render();
 	}
 
 	@Override
 	public void pause () {
-		Core.app.log("", "暂停");
+		Core.app.log(TAG, "暂停");
+		paused = true;
 	}
 
 	@Override
 	public void resume () {
-		Core.app.log("", "继续");
+		Core.app.log(TAG, "继续");
+		paused = false;
 	}
 	
 	@Override
 	public void dispose () {
-		Core.app.log("", "销毁");
-		batch.dispose();
-		img.dispose();
+		Core.app.log(TAG, "销毁");
+		worldRenderer.dispose();
 	}
 }
