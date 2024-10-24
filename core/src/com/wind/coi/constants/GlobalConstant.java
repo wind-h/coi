@@ -11,4 +11,6 @@ public class GlobalConstant {
 
     // 将游戏世界的可视宽度定义为5米(视口宽度)
     public static final float VIEWPORT_HEIGHT = 5.0f;
+
+    public static final String TEXTURE_ATLAS_OBJS = "assents/coi.pack.atlas";
 }
