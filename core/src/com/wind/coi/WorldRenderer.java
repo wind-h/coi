@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.wind.coi.constants.GlobalConstant;
-import com.wind.coi.core.Core;
 
 /**
  * @author hsc
@@ -37,6 +36,7 @@ public class WorldRenderer implements Disposable {
     }
 
     private void renderObjs() {
+        worldController.getCameraHelper().apply(camera);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         Sprite[] sprites = worldController.getSprites();
